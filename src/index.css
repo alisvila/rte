@@ -11,3 +11,310 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {font-family: IRANSans;font-style: normal;font-weight: 900;src: url('https://static.mizfa.com/cdn/fonts/is/eot/IRANSansWeb.eot');src: url('https://static.mizfa.com/cdn/fonts/is/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */url('https://static.mizfa.com/cdn/fonts/is/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/url('https://static.mizfa.com/cdn/fonts/is/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/     url('https://static.mizfa.com/cdn/fonts/is/ttf/IRANSansWeb.ttf') format('truetype');}body * {font-family : IRANSans !important}
+      
+body {
+  font-family: IRANSans;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #3f3d56;
+}
+
+.mr-auto, .mx-auto {
+  margin-left: auto!important;
+}
+
+.navbar {
+  direction: rtl;
+}
+
+.navbar-brand img {
+  max-height: 100px;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.text-primary-color {
+  color: #d2ab68;
+}
+
+.nav-btn {
+  background: #ff9900;
+  padding: 5px 34px;
+  border-radius: 10px;
+}
+
+.nav-btn a {
+  color: white !important;
+}
+
+
+.btn-finno {
+  border: 1px solid #eca934;
+  background-color: #ff9900;
+  color: white;
+}
+
+.btn-finno:hover {
+background-color: #f58220
+}
+
+.login-wrapper {
+  margin: 19% auto;
+  width: 445px;
+  padding: 40px;
+  border: 1px solid #e6e6e6;
+  background-color: #fbfbfb;
+  direction: rtl;
+
+}
+.login-wrapper input {
+  margin-bottom: 10px;
+}
+
+.logo {
+  width: 96%;
+}
+
+.checkbox {
+      text-align: center;
+  color: #505050;
+}
+.error {
+  display: none;
+  text-align: center;
+  color: white;
+  background: #e23d39;
+  margin-top: 14px;
+  border-radius: 5px;
+  padding: 2px;
+}
+.power {
+  color: #444444;
+      text-align: center;
+  direction: ltr;
+    font-size: 22px;
+}
+.power img {
+  height: 41px;
+}
+.power .heart {
+  height: 26px;
+}
+
+.banner-text-wrapper {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.banner-text {
+  font-size: 43px;
+  color: white;
+}
+
+.sec-colom {
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.card {
+  direction: rtl;
+  border: 1px solid #b5cfd8;
+  /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
+  transition: 0.3s;
+  /* width: 40%; */
+  margin: 25px;
+}
+
+.card:hover {
+  /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); */
+}
+
+.card h6 {
+  background-color: #b5cfd8;
+  padding: 15px;
+  color: #616161;
+}
+
+.card img {
+  height: 75px;
+  margin: 4px;
+}
+
+.approved-icone {
+  padding-bottom: 20px;
+}
+
+.banner-extension {
+  text-align: right;
+}
+
+.pillar .content {
+  text-align: right;
+}
+
+.pillar .content h3 {
+  margin-bottom: 32px;
+}
+
+.feature-wrap p {
+  color: #898989;
+}
+
+.feature-wrap h2 {
+margin-bottom: 35px;
+}
+
+.box-shadow {
+  background: white;
+  box-shadow: 0 15px 25px -7px rgba(0,0,0,0.09), 0 -12px 10px -10px rgba(0,0,0,0.04);
+}
+
+.section {
+  padding-top: 70px;
+  background-color: #f3f3f7;
+}
+
+.change-color {
+  background-color: white;
+  margin-top: 90px;
+  padding-bottom: 100px;
+}
+
+.pillar {
+  padding: 62px 50px;
+  text-align: justify;
+  direction: rtl;
+}
+
+.avalin-section .pillar img {
+  margin-bottom: 25px;
+}
+
+.sep h2, .sep .sub-header {
+  margin-right: 30px;
+}
+
+.sep h2, .sep h3 {
+  margin-bottom: 12px;
+}
+
+.sep .sub-header {
+  font-size: 1.5rem;
+}
+
+.sep {
+  float: right;
+  text-align: right;
+}
+
+.sep img {
+  width: 100%;
+}
+
+.back-color {
+  background-color: #f3f3f7;
+}
+
+.short-row {
+  margin: 33px 30px;
+  border-bottom: 1px solid #f3f3f7;
+  padding-bottom: 13px;
+}
+
+.short-row:last-child {
+  border-bottom: none;
+}
+
+.btn-finno {
+  box-shadow: 3px 3px 7px 1px rgba(0,0,0,0.2);
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-size: 14px;
+  border-radius: 8px;
+  background-color: #ff9900;
+  color: #ffffff;
+  padding: 11px 20px;
+  margin: 2px;
+}
+
+h2, h3, h1, h4 {
+  margin-bottom: 24px;
+}
+
+.section.background-image {
+  background: #3a354a url(http://jevelin.shufflehound.com/finances/wp-content/uploads/sites/26/2019/07/susbscribe-bg.jpg?id=553) !important;
+}
+
+.banner {
+  background: #5f586f url(http://jevelin.shufflehound.com/finances/wp-content/uploads/sites/26/2019/07/slide.jpg?id=485) !important;
+  min-height: 500px;
+  height: 90vh;
+}
+
+.sh-image-url {
+  margin-top: 35px;
+  margin-right: -49px;
+  margin-bottom: -62px;
+}
+
+.avalin-section {
+  margin-top: -350px;
+}
+
+.avalin-section h2 {
+  margin-bottom: 32px;
+}
+
+.avalin-section p {
+  color: #898989;
+}
+
+.jombo {
+  text-align: center;
+    color: white;
+}
+
+.news-section-header {
+  text-align: center;
+  margin-bottom: 19px;
+}
+
+.news-section {
+  padding-bottom: 70px;
+}
+
+footer {
+  background-color: #3f3d56 !important;
+}
+
+.footer-pillar {
+  margin: 61px 0px;
+  color: white;
+}
+
+.footer-pillar .logo-image {
+  margin-bottom: 29px;
+}
+
+footer a, footer p {
+  color: #bebbdc;
+}
+
+.footer-pillar h4 {
+  padding-left: .8rem; 
+}

@@ -3,10 +3,10 @@ import { Row, Col, Container, Form, FormControl, Button } from 'react-bootstrap'
 
 export default function Search() {
     return (
-        <div className="d-flex justify-content-center"  style={{marginTop: '5%'}}>
+        <div className="d-flex justify-content-center"  style={{marginTop: '5%', direction: 'rtl'}}>
             <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-success">Search</Button>
+                <Button className="btn-secondary">جستجو</Button>
+                <FormControl type="text" placeholder="جستجو" className="mr-sm-2" />
             </Form>
         </div>
     )

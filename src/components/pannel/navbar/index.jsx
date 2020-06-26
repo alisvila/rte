@@ -1,19 +1,33 @@
 import React from 'react'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useHistory,
+    useLocation,
+    useParams
+} from "react-router-dom";
+import arvin from '../../logo.png'
+
 
 export default function Navigation() {
     return (
-        <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar className="pannel-nav" expand="lg" style={{marginTop: '5%'}}>
+            <Navbar.Brand href="#home">
+                <img src={arvin} />
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="m-auto">
-                    <Nav.Link href="#home">تبلیغ</Nav.Link>
-                    <Nav.Link href="#link">گزارش</Nav.Link>
-                    <Nav.Link href="#link">پروفایل</Nav.Link>
-                    <Nav.Link href="#link">خروج</Nav.Link>
+                    <Link className="nav-link" to="/panel">تبلیغ</Link>
+                    <Link className="nav-link" to="/panel/reports">گزارش</Link>
+                    <Link className="nav-link" to="/panel/profile">پروفایل</Link>
+                    <Link className="nav-link" to="/login">خروج</Link>
                 </Nav>
-                <Navbar.Brand href="#home">آویر</Navbar.Brand>
+                <Navbar.Brand href="#home" className="prifile-text">رامین عزیز خوش آمدی</Navbar.Brand>
             </Navbar.Collapse>
         </Navbar>
     )

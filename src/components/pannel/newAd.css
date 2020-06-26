@@ -1,8 +1,6 @@
-.rtl{
-    direction: rlt;
-}
 
-.uploader{
-    border:1px solid orange;
-    height: 100px;;
+.right-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }

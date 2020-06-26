@@ -12,8 +12,20 @@ code {
     monospace;
 }
 
-@font-face {font-family: IRANSans;font-style: normal;font-weight: 900;src: url('https://static.mizfa.com/cdn/fonts/is/eot/IRANSansWeb.eot');src: url('https://static.mizfa.com/cdn/fonts/is/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */url('https://static.mizfa.com/cdn/fonts/is/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/url('https://static.mizfa.com/cdn/fonts/is/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/     url('https://static.mizfa.com/cdn/fonts/is/ttf/IRANSansWeb.ttf') format('truetype');}body * {font-family : IRANSans !important}
+@font-face {
+  font-family: IRANSans;
+  font-style: bold;
+  font-weight: 900;
+  src: url('./font-bold.ttf');
+  src: url('./font-bold.ttf') format('embedded-opentype'),  /* IE6-8 */url('https://static.mizfa.com/cdn/fonts/is/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/url('https://static.mizfa.com/cdn/fonts/is/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/     url('./font.ttf') format('truetype');}body * {font-family : IRANSans !important}
       
+  @font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    src: url('./font.ttf');
+    src: url('./font.ttf') format('embedded-opentype'),  /* IE6-8 */url('https://static.mizfa.com/cdn/fonts/is/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/url('https://static.mizfa.com/cdn/fonts/is/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/     url('./font.ttf') format('truetype');}body * {font-family : IRANSans !important}
+      
+    
 body {
   font-family: IRANSans;
   margin: 0;
@@ -23,6 +35,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #3f3d56;
+  background-color: #433b49;;
 }
 
 .mr-auto, .mx-auto {
@@ -73,8 +86,10 @@ background-color: #f58220
   border: 1px solid #e6e6e6;
   background-color: #fbfbfb;
   direction: rtl;
-
+  box-shadow: -3px 4px 24px -1px rgba(0,0,0,0.73);
+  border-radius: 5px;
 }
+
 .login-wrapper input {
   margin-bottom: 10px;
 }
@@ -141,10 +156,12 @@ background-color: #f58220
 }
 
 .card img {
-  max-height: 143px;
+  max-height: 134px;
+  max-width: 238px;
 }
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+  box-shadow: 0 9px 14px 0 rgb(39, 39, 39)
 }
 
 .card h6 {

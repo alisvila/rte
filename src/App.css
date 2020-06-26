@@ -2,10 +2,64 @@
   text-align: center;
 }
 
+body {
+  background-color: #433b49;;
+
+}
+
+.btn-primary {
+  background-color: #ff9900;
+  border-color: #e48900;
+}
+
+.btn-primary:hover {
+  background-color: #ff7600;
+  border-color: #d26100;
+}
+
+.btn-secondary {
+  background-color: #846e92;
+  border-color: #685673;
+}
+
+.btn-secondary:hover {
+  background-color: #7d5e90;
+  border-color: #4f3b5a;
+}
+
+hr {
+  border-top: 2px solid #f90;
+}
+
+.btn-small-submit {
+  width: 130px;
+}
+
+.pannel-wrapper {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 44px;
+  margin-top: 5%;
+  background-color: #c4c3c4;
+  text-align: right;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+
+.navbar-light .navbar-nav .nav-link, .prifile-text {
+  color: #9c81ad;
+  font-weight: 900;
+}
+
+.navbar-light .navbar-brand {
+  color: #9c81ad;
+  font-weight: 400;
+  font-size: 17px;
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

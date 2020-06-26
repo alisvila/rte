@@ -26,7 +26,7 @@ export default function Login() {
     }
 
     const login = () => {
-        let path = `panel/`;
+        let path = `panel`;
         history.push(path);
         // agent.Auth.login(this.state.username, this.state.password, this.loginSuccess);
     }
@@ -59,7 +59,7 @@ export default function Login() {
                                 <input type="checkbox" value="remember-me" />مرا به خاطر بسپار
                                 </label>
                         </div>
-                        <button className="btn btn-lg btn-block btn-finno" onClick={login}>ورود</button>
+                        <button className="btn btn-lg btn-block btn-primary" onClick={login}>ورود</button>
                         <p className="error" id="error"></p>
                     </form>
                 </div>

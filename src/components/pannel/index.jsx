@@ -8,7 +8,7 @@ import Search from './search'
 export default function index() {
     return (
 
-        <Container style={{marginTop: '5%'}}>
+        <Container>
             <Navigation />
             <Search />
             <AdsList />

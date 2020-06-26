@@ -138,19 +138,17 @@ background-color: #f58220
   margin: 25px;
 }
 
+.card img {
+  max-height: 143px;
+}
 .card:hover {
-  /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); */
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .card h6 {
   background-color: #b5cfd8;
   padding: 15px;
   color: #616161;
-}
-
-.card img {
-  height: 75px;
-  margin: 4px;
 }
 
 .approved-icone {

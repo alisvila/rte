@@ -8,12 +8,12 @@ export default function Navigation() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="m-auto">
-                    <Nav.Link href="#home">ads</Nav.Link>
-                    <Nav.Link href="#link">Gozaresh</Nav.Link>
-                    <Nav.Link href="#link">Profile</Nav.Link>
-                    <Nav.Link href="#link">Logout</Nav.Link>
+                    <Nav.Link href="#home">تبلیغ</Nav.Link>
+                    <Nav.Link href="#link">گزارش</Nav.Link>
+                    <Nav.Link href="#link">پروفایل</Nav.Link>
+                    <Nav.Link href="#link">خروج</Nav.Link>
                 </Nav>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                <Navbar.Brand href="#home">آویر</Navbar.Brand>
             </Navbar.Collapse>
         </Navbar>
     )

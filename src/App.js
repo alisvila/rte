@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PannelHome from './components/pannel';
 import Login from './components/login';
 import NewAd from './components/pannel/newAd'
+import EditAd from './components/pannel/editAd'
 import PrivateRoute from './privateRoute'
 import NoMatch from './components/noMatch'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,6 +25,9 @@ function App() {
         </PrivateRoute>
         <PrivateRoute path="/panel/newad">
           <NewAd />
+        </PrivateRoute>
+        <PrivateRoute path="/panel/editadd/:adId">
+          <EditAd />
         </PrivateRoute>
         <Route path="*">
           <NoMatch />

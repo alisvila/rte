@@ -12,7 +12,7 @@ import {
     Redirect,
     useHistory,
     useLocation
-  } from "react-router-dom";
+} from "react-router-dom";
 
 
 export default function AdsList() {

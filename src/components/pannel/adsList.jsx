@@ -57,10 +57,6 @@ export default function AdsList() {
                     )
                 })}
             </Row>
-            <Row style={{ marginTop: '1rem' }}>
-            </Row>
-
-
         </div>
     )
 }

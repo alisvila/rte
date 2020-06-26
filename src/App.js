@@ -7,6 +7,8 @@ import NewAd from './components/pannel/newAd'
 import EditAd from './components/pannel/editAd'
 import PrivateRoute from './privateRoute'
 import NoMatch from './components/noMatch'
+import Reports from './components/pannel/reports'
+import Profile from './components/pannel/profile'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -25,6 +27,12 @@ function App() {
         </PrivateRoute>
         <PrivateRoute path="/panel/newad">
           <NewAd />
+        </PrivateRoute>
+        <PrivateRoute path="/panel/reports">
+          <Reports />
+        </PrivateRoute>
+        <PrivateRoute path="/panel/profile">
+          <Profile />
         </PrivateRoute>
         <PrivateRoute path="/panel/editadd/:adId">
           <EditAd />

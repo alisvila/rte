@@ -80,7 +80,9 @@ background-color: #f58220
 }
 
 .logo {
-  width: 96%;
+  width: 50%;
+  margin: 0 auto;
+  display: block;;
 }
 
 .checkbox {

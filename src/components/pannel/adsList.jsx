@@ -28,7 +28,6 @@ export default function AdsList() {
     useEffect(() => {
         console.log(list.length)
 
-
         // Update the document title using the browser API
     });
 
@@ -40,7 +39,7 @@ export default function AdsList() {
         <div style={{ marginTop: '5%' }}>
 
             <Row>
-                <Col>
+                <Col md={4}>
                     <Card onClick={routeChange}>
                         <img src={add} alt="plx1" />
                     </Card>
@@ -49,7 +48,7 @@ export default function AdsList() {
                 {list.map((item, index) => {
                     console.log(item, index)
                     return (
-                        <Col key={index}>
+                        <Col key={index} md={4}>
                             <Card onClick={addNew}>
                                 <img src={item} alt="plx1" />
                             </Card>

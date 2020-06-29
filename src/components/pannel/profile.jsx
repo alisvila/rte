@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Row, Col, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Navigation from './navbar';
 
 
-export default function profile() {
+export default function Profile() {
+
+    useEffect(() => {
+        
+            console.log('asd')
+    })
 
     return (
         <Container style={{ direction: 'rtl', textAlign: 'right' }}>

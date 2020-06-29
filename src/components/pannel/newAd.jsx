@@ -5,6 +5,7 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
 import * as moment from 'jalali-moment';
+import momentJalaali from 'moment-jalaali';
 import './newAd.css';
 import add from './add.png'
 import {
@@ -94,6 +95,7 @@ export default class index extends Component {
                                 <DateRangePicker
                                     stateDateWrapper={moment.locale('fa')}
                                     date={moment.locale('fa')}
+                                    stateDateWrapper={momentJalaali}
                                     isRTL
                                     // showDefaultInputIcon
                                     showClearDates
@@ -113,6 +115,9 @@ export default class index extends Component {
                                     // // small={this.state.small}
                                     // // withFullScreenPortal={this.state.fullscreen}
                                     anchorDirection="right"
+
+                                    renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
+                                    renderDayContents={day => momentJalaali(day).format('jD')}
                                 // orientation="horizontal"
                                 // minimumNights={this.state.minimumNights}
                                 // isDayBlocked={this.handleIsDayBlocked}

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,17 +9,20 @@ import {
     useLocation
   } from "react-router-dom";
 
-  const fakeAuth = {
-    isAuthenticated: true,
-    authenticate(cb) {
-      fakeAuth.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-      fakeAuth.isAuthenticated = false;
-      setTimeout(cb, 100);
-    }
-  };
+  import fakeAuth from './services/auth'
+  // localStorage.setItem('token', 'filan')
+  // const fakeAuth = {
+  //   isAuthenticated: true,
+  //   authenticate(cb) {
+  //     console.log('check for auth')
+  //     fakeAuth.isAuthenticated = true;
+  //     setTimeout(cb, 100); // fake async
+  //   },
+  //   signout(cb) {
+  //     fakeAuth.isAuthenticated = false;
+  //     setTimeout(cb, 100);
+  //   }
+  // };
   
 
   export default function PrivateRoute({ children, ...rest }) {
@@ -28,7 +30,7 @@ import {
       <Route
         {...rest}
         render={({ location }) =>
-          fakeAuth.isAuthenticated ? (
+          fakeAuth.isAuthenticated() ? (
             children
           ) : (
             <Redirect

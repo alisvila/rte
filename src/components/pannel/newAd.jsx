@@ -26,8 +26,8 @@ export default class index extends Component {
         super()
         this.state = {
             focusedInput: null,
-            startDate: moment.locale('fa'),
-            endDate: moment().add(7, 'days'),
+            startDate: momentJalaali(),
+            endDate: momentJalaali().add(7, 'days'),
             fullscreen: false,
             // direction: 'left',
             dateFormat: 'jMM/DD/YYYY',
@@ -50,6 +50,8 @@ export default class index extends Component {
     }
 
     componentDidMount() {
+        console.log(this.state.startDate)
+        console.log(this.state.endDate)
     }
 
     BLOCKED_DATES = [
@@ -93,7 +95,7 @@ export default class index extends Component {
                             <div className="form-group" style={{ direction: 'ltr', textAlign: 'center' }}>
                                 <label>بازه ردیابی</label>
                                 <DateRangePicker
-                                    stateDateWrapper={moment.locale('fa')}
+                                    // stateDateWrapper={moment.locale('fa')}
                                     date={moment.locale('fa')}
                                     stateDateWrapper={momentJalaali}
                                     isRTL
@@ -101,10 +103,10 @@ export default class index extends Component {
                                     showClearDates
                                     startDatePlaceholderText="تاریخ شروع"
                                     endDatePlaceholderText="تاریخ پایان"
-                                    // startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                                    // startDateId="unique_start_date_id" // PropTypes.string.isRequired,
-                                    // endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                                    // endDateId="unique_end_date_id" // PropTypes.string.isRequired,
+                                    startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                                    startDateId="unique_start_date_id" // PropTypes.string.isRequired,
+                                    endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                                    endDateId="unique_end_date_id" // PropTypes.string.isRequired,
                                     onDatesChange={this.handleDatesChange} // PropTypes.func.isRequired,
                                     focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                                     onFocusChange={this.handleFocusChange} // PropTypes.func.isRequired,

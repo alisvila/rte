@@ -1,1 +1,1 @@
-export const url = "http://avir.sytes.net:7000/"
+export const APILink = "http://avir.sytes.net:7000/"

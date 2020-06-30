@@ -164,6 +164,10 @@ background-color: #f58220
   box-shadow: 0 9px 14px 0 rgb(39, 39, 39)
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .card h6 {
   background-color: #b5cfd8;
   padding: 15px;

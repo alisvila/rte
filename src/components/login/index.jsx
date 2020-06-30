@@ -1,5 +1,6 @@
 import React, {  useState } from 'react'
 import { withRouter } from 'react-router-dom';
+import {auth} from '../../services/services'
 
 import avir from '../logo.png'
 
@@ -21,14 +22,20 @@ export default function Login() {
 
 
     const routeChange = () => {
-        let path = `panel/newad`;
-        history.push(path);
+        let res = auth('admin', 'avir')
+        console.log(res)
+        let path = "/panel"
+
     }
 
-    const login = () => {
-        let path = `panel`;
-        history.push(path);
-        // agent.Auth.login(this.state.username, this.state.password, this.loginSuccess);
+    const login = async () => {
+        console.log('going for auth')
+        auth('admin', 'avir').then(data => {
+            console.log()
+            history.push('panel')
+        }).catch(e => {
+            console.log(e)
+        })
     }
 
     return (
@@ -37,16 +44,16 @@ export default function Login() {
                 <div className="login-wrapper">
                     <form className="form-signin">
                         <img className="mb-4 logo" src={avir} alt="" />
-                        <label for="inputEmail" className="sr-only">آدرس ایمیل</label>
+                        <label className="sr-only">آدرس ایمیل</label>
                         <input type="text"
                             name="username"
                             id="inputEmail"
                             className="form-control"
                             placeholder="آدرس ایمیل"
                             required
-                            autofocus
+                            autoFocus
                         />
-                        <label for="inputPassword" className="sr-only">روز عبور</label>
+                        <label className="sr-only">روز عبور</label>
                         <input type="password"
                             name="password"
                             id="inputPassword"

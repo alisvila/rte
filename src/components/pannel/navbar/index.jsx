@@ -11,13 +11,21 @@ import {
     useParams
 } from "react-router-dom";
 import arvin from '../../logo.png'
+import { logout } from '../../../services/auth'
 
 
 export default function Navigation() {
+    const history = useHistory();
+
+    const exit = (e) => {
+        console.log('exit')
+        logout()
+        history.push('/')
+    }
     return (
         <Navbar className="pannel-nav" expand="lg" style={{marginTop: '5%'}}>
             <Navbar.Brand href="#home">
-                <img src={arvin} />
+                <img src={arvin} alt="avir logo"/>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -25,7 +33,7 @@ export default function Navigation() {
                     <Link className="nav-link" to="/panel">تبلیغ</Link>
                     <Link className="nav-link" to="/panel/reports">گزارش</Link>
                     <Link className="nav-link" to="/panel/profile">پروفایل</Link>
-                    <Link className="nav-link" to="/login">خروج</Link>
+                    <span className="nav-link pointer" href="#" onClick={() => exit()}>خروج</span>
                 </Nav>
                 <Navbar.Brand href="#home" className="prifile-text">رامین عزیز خوش آمدی</Navbar.Brand>
             </Navbar.Collapse>

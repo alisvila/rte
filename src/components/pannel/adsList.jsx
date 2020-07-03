@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../share/card'
 import plc1 from './plc1.jpg'
-import plc2 from './plc2.jpg'
+import place from '../place.png'
 import add from './add.png'
 import { Row, Col, Container, Form, FormControl, Button } from 'react-bootstrap';
 import {
@@ -13,10 +13,12 @@ import {
     useHistory,
     useLocation
 } from "react-router-dom";
+import { getAllAd, getVideoImage } from '../../services/services'
 
 
 export default function AdsList() {
-    const [list, setList] = useState([plc1, plc2]);
+    const [list, setList] = useState([]);
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
 
     const routeChange = () => {
@@ -26,15 +28,19 @@ export default function AdsList() {
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-        console.log(list.length)
+        getAllAd().then(json => setList(json))
+        console.log(list)
+        
+    }, []);
 
-        // Update the document title using the browser API
-    });
-
-    const addNew = () => {
+    const addNew = (e) => {
+        console.log(e)
+        history.push(`panel/editad/${e.target.name}`)
         console.log('clicked')
     }
 
+    const enabled = { border: '3px solid green', borderRadius: '5px' }
+    const disabled = {border: '3px solid red', borderRadius: '5px'}
     return (
         <div style={{ marginTop: '5%' }}>
 
@@ -46,11 +52,14 @@ export default function AdsList() {
                 </Col>
 
                 {list.map((item, index) => {
-                    console.log(item, index)
+                    if (!item.image) {
+                        item.image = place
+                    }
+                    item.image = getVideoImage(item.id)
                     return (
-                        <Col key={index} md={4}>
-                            <Card onClick={addNew}>
-                                <img src={item} alt="plx1" />
+                        <Col key={item.id} md={4}>
+                            <Card onClick={addNew} name={item.id} style={item.enabled ? enabled : disabled}>
+                                <img src={item.image} alt={item.description} />
                             </Card>
                         </Col>
                     )

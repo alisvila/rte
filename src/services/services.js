@@ -38,6 +38,35 @@ export const getAdVideo = (adId) => {
   })
 }
 
+export const getAllAd = () => {
+  return new Promise((resolve, reject) => {
+    sendRequest({
+      url: 'ad',
+      method: 'GET',
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
+export const getVideoImage = (id) => {
+  return `${APILink}ad/${id}/image`
+  // return new Promise((resolve, reject) => {
+  //   sendRequest({
+  //     url: `ad/${id}/image`,
+  //     method: 'get',
+  //     res: 'blob'
+  //   }).then(res => {
+  //     console.log(res)
+  //     resolve((res))
+  //   }).catch(e => {
+  //     reject(e)
+  //   })
+  // })
+}
+
 export const getAdByQuery = (companyId, tagId) => {
   sendRequest({
     url: 'ad',
@@ -50,7 +79,8 @@ export const getAdByQuery = (companyId, tagId) => {
   })
 }
 
-export const upload = (file, name, company_id, tag_ids, enabled, schedule) => {
+export const upload = ({file, name, company_id, tag_ids, enabled, schedule}) => {
+  console.log(file, name, company_id)
   var bodyFormData = new FormData();
   bodyFormData.append('video', file);
   bodyFormData.append('name', name);
@@ -59,12 +89,30 @@ export const upload = (file, name, company_id, tag_ids, enabled, schedule) => {
   bodyFormData.append('enabled', enabled);
   bodyFormData.append('schedule', schedule);
 
-  sendRequest({
-    url: 'ad',
-    method: 'Post',
-    body: bodyFormData
-  }).then(json => {
-    return json
+  return new Promise((resolve, reject) => {
+
+    sendRequest({
+      url: 'ad',
+      method: 'Post',
+      body: bodyFormData
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
+export const getTags = () => {
+  return new Promise((resolve, reject) => {
+    sendRequest({
+      url: 'tag',
+      method: 'get',
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
   })
 }
 
@@ -87,8 +135,7 @@ export const auth = (username, password) => {
   })
 }
 
-export const sendRequest = async ({ auth = "", url, params = "", method = "GET", body = "" }) => {
-  console.log(url, method)
+export const sendRequest = async ({ auth = "", url, params = "", method = "GET", body = "", res = "data" }) => {
   let options = {
     url: `${APILink}${url}?${params}`,
     method,
@@ -103,8 +150,10 @@ export const sendRequest = async ({ auth = "", url, params = "", method = "GET",
   return new Promise((resolve, reject) => {
     axios(options)
       .then(response => {
-        console.log(response.data)
         if (response.status !== 200) throw response.status;
+        if (res === 'blob') {
+            resolve(response)
+        }
         resolve(response.data)
       })
       // .then(json => resolve(json))

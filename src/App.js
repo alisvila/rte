@@ -35,7 +35,7 @@ function App() {
           <Profile />
         </PrivateRoute>
         <PrivateRoute path="/panel/editadd/:adId">
-          <EditAd />
+          <NewAd />
         </PrivateRoute>
         <Route path="*">
           <NoMatch />

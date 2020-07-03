@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import { Container, Row, Col, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Navigation from './navbar';
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
-import { DateRangePicker } from 'react-dates';
-import * as moment from 'jalali-moment';
-import momentJalaali from 'moment-jalaali';
+
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
 import './newAd.css';
 import add from './add.png'
 import {
@@ -18,142 +16,106 @@ import {
     useLocation,
     useParams
 } from "react-router-dom";
-import Card from '../share/card'
+import Card from '../share/card';
 
 
-export default class index extends Component {
-    constructor() {
-        super()
-        this.state = {
-            focusedInput: null,
-            startDate: momentJalaali(),
-            endDate: momentJalaali().add(7, 'days'),
-            fullscreen: false,
-            // direction: 'left',
-            dateFormat: 'jMM/DD/YYYY',
-            small: false,
-            block: false,
-            orientation: 'horizontal',
-            numMonths: 2,
-            minimumNights: 7,
-            listItems: [
-                {
-                    name: 'آیتم 1', id: 1
-                },
-                {
-                    name: 'آیتم 2', id: 2
-                }]
+
+const Index = () => {
+    const [selectedDayRange, setSelectedDayRange] = useState({
+        from: null,
+        to: null
+      });
+
+     const [listItems, setListItem] = useState([
+            {
+                name: 'آیتم 1', id: 1
+            },
+            {
+                name: 'آیتم 2', id: 2
+            }
+     ]);
+
+
+     const renderCustomInput = ({ ref }) => (
+        <input
+          readOnly
+          ref={ref} // necessary
+          placeholder=""
+          value={ selectedDayRange.from == null || selectedDayRange.to == null ? '' : `از ${ selectedDayRange.from.day } / ${selectedDayRange.from.month} / ${selectedDayRange.from.year} تا ${ selectedDayRange.to.day } / ${selectedDayRange.to.month} / ${selectedDayRange.to.year}` }
+          className="form-control" // a styling class
+        />
+      )
+
+    var fileInput = useRef(null);
+
+    const wrapper = { border: '1px solid gray', borderRadius: '5px', padding: '44px', marginTop: '5%' }
+
+        const triggerInputFile = () => {
+            ///console.log(fileInput)
+             fileInput.click();
         }
-        this.handleDatesChange = this.handleDatesChange.bind(this)
-        this.handleFocusChange = this.handleFocusChange.bind(this)
-        this.handleIsDayBlocked = this.handleIsDayBlocked.bind(this)
+
+    const sumbitForm = () => {
+        
     }
+    return (
+        <Container style={{ direction: 'rtl' }}>
+            <Navigation />
 
-    componentDidMount() {
-        console.log(this.state.startDate)
-        console.log(this.state.endDate)
-    }
 
-    BLOCKED_DATES = [
-        moment().add(10, 'days'),
-        moment().add(11, 'days'),
-        moment().add(12, 'days'),
-    ];
-
-    handleDatesChange({ startDate, endDate }) {
-        this.setState({ startDate, endDate });
-    }
-
-    handleFocusChange(focusedInput) {
-        this.setState({ focusedInput });
-    }
-
-    handleIsDayBlocked(day) {
-        return this.BLOCKED_DATES.filter(d => d.isSame(day, 'day')).length > 0;
-    }
-
-    submitAd() {
-        var bodyFormData = new FormData();
-
-    }
-
-    render() {
-        const wrapper = { border: '1px solid gray', borderRadius: '5px', padding: '44px', marginTop: '5%' }
-        return (
-            <Container style={{ direction: 'rtl' }}>
-                <Navigation />
-
-                <div className="pannel-wrapper">
-                    <Row style={{ textAlign: 'center', marginTop: '50px' }}>
-                        <Col className="right-col" md={6}>
-                            <div className="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>نام</label>
-                                    <input type="text" className="form-control" placeholder="نام" />
-                                </div>
-                            </div>
-                            <div className="form-group" style={{ direction: 'ltr', textAlign: 'center' }}>
-                                <label>بازه ردیابی</label>
-                                <DateRangePicker
-                                    // stateDateWrapper={moment.locale('fa')}
-                                    date={moment.locale('fa')}
-                                    stateDateWrapper={momentJalaali}
-                                    isRTL
-                                    // showDefaultInputIcon
-                                    showClearDates
-                                    startDatePlaceholderText="تاریخ شروع"
-                                    endDatePlaceholderText="تاریخ پایان"
-                                    startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                                    startDateId="unique_start_date_id" // PropTypes.string.isRequired,
-                                    endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                                    endDateId="unique_end_date_id" // PropTypes.string.isRequired,
-                                    onDatesChange={this.handleDatesChange} // PropTypes.func.isRequired,
-                                    focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                    onFocusChange={this.handleFocusChange} // PropTypes.func.isRequired,
-                                    displayFormat="jYYYY/jMM/jDD"
-                                    // hideKeyboardShortcutsPanel={true}
-                                    // numberOfMonths={2}
-                                    block={true}
-                                    // // small={this.state.small}
-                                    // // withFullScreenPortal={this.state.fullscreen}
-                                    anchorDirection="right"
-
-                                    renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
-                                    renderDayContents={day => momentJalaali(day).format('jD')}
-                                // orientation="horizontal"
-                                // minimumNights={this.state.minimumNights}
-                                // isDayBlocked={this.handleIsDayBlocked}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>دسنه</label>
-                                <select type="text" className="form-control" placeholder="نام" >
-                                    {this.state.listItems.map(m => <option value={m.id}> {m.name} </option>)}
-                                </select>
-                            </div>
-                        </Col>
-                        <Col style={{ textAlign: 'center' }} md={6}>
-
+            <div className="pannel-wrapper">
+                <Row style={{ textAlign: 'center', marginTop: '50px' }}>
+                    <Col className="right-col" md={6}>
+                        <div className="form-row">
                             <div class="form-group col-md-12">
-                                <Card>
-                                    <img src={add} alt="plx1" />
-                                </Card>                            </div>
-
-                            <div class="form-group" style={{ marginTop: '30px' }}>
-                                <label>توضیحات</label>
-                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <label>نام</label>
+                                <input type="text" className="form-control" placeholder="نام" />
                             </div>
-                        </Col>
-                    </Row>
-                    <Row style={{ textAlign: 'center', marginTop: '65px' }}>
-                        <Col>
-                            <Link className="btn btn-primary btn-block" to="/panel">ذخیره</Link>
-                        </Col>
-                    </Row>
-                </div>
+                        </div>
+                        <div className="form-group" style={{ direction: 'ltr', textAlign: 'center' }}>
+                            <label>بازه ردیابی</label>
+                            <DatePicker
+                            value={selectedDayRange}
+                            onChange={setSelectedDayRange}
+                            inputPlaceholder="Select a day range"
+                            shouldHighlightWeekends
+                            renderInput={renderCustomInput} // render a custom input
+                            locale="fa"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>دسنه</label>
+                            <select type="text" className="form-control" placeholder="نام" >
+                                {listItems.map(m => <option value={m.id}> {m.name} </option>)}
+                            </select>
+                        </div>
+                    </Col>
+                    <Col style={{ textAlign: 'center' }} md={6}>
 
-            </Container>
-        )
-    }
+                        <div class="form-group col-md-12" onClick={triggerInputFile}>
+                            <Card>
+                                <img src={add} alt="plx1"/>
+                                <input type="file" ref={input => fileInput = input} />
+                            </Card>                            </div>
 
+                        <div class="form-group" style={{ marginTop: '30px' }}>
+                            <label>توضیحات</label>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </Col>
+                </Row>
+                <Row style={{ textAlign: 'center', marginTop: '65px' }}>
+                    <Col>
+                        {/* <Link className="btn btn-primary btn-block" to="/panel">ذخیره</Link> */}
+                        <Button lassName="btn btn-primary btn-block" onClick={sumbitForm}>ذخیره</Button>
+                    </Col>
+                </Row>
+            </div>
+
+        </Container>
+    )
+    
 }
+
+
+export default Index;

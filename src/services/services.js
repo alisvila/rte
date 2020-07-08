@@ -1,4 +1,6 @@
 import axios from 'axios';
+import jwt from 'jwt-decode'
+import moment from 'moment'
 import { APILink } from '../config';
 
 export const getMatchByQuery = (startTime, endTime, adId, companyId, tagId) => {
@@ -80,7 +82,7 @@ export const getAdByQuery = (companyId, tagId) => {
 }
 
 export const upload = ({file, name, company_id, tag_ids, enabled, schedule}) => {
-  console.log(file, name, company_id)
+
   var bodyFormData = new FormData();
   bodyFormData.append('video', file);
   bodyFormData.append('name', name);
@@ -88,6 +90,7 @@ export const upload = ({file, name, company_id, tag_ids, enabled, schedule}) => 
   bodyFormData.append('tag_ids', tag_ids);
   bodyFormData.append('enabled', enabled);
   bodyFormData.append('schedule', schedule);
+
 
   return new Promise((resolve, reject) => {
 
@@ -116,6 +119,19 @@ export const getTags = () => {
   })
 }
 
+export const getUserData = () => {
+  return new Promise((resolve, reject) => {
+    sendRequest({
+      url: 'account',
+      method: 'get',
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
 export const auth = (username, password) => {
   var bodyFormData = new FormData();
   bodyFormData.set('username', username);
@@ -125,9 +141,30 @@ export const auth = (username, password) => {
       url: 'login',
       method: 'Post',
       body: bodyFormData
-    }).then(json => {
-      localStorage.setItem('token', json['access_token'])
-      localStorage.setItem('refresh_token', json['refresh_token'])
+    }).then(token => {
+      console.log(jwt(token['access_token']))
+      localStorage.setItem('token', token['access_token'])
+      localStorage.setItem('refresh_token', token['refresh_token'])
+      resolve(true)
+    }).catch(e => {
+      reject(false)
+    })
+  })
+}
+
+export const sendRefreshToken = () => {
+  var bodyFormData = new FormData();
+  localStorage.getItem('refresh_token')
+  bodyFormData.set('token', localStorage.getItem('refresh_token'));
+  return new Promise((resolve, reject) => {
+    sendRequest({
+      url: 'login',
+      method: 'Post',
+      body: bodyFormData
+    }).then(token => {
+      console.log(jwt(token['access_token']))
+      localStorage.setItem('token', token['access_token'])
+      localStorage.setItem('refresh_token', token['refresh_token'])
       resolve(true)
     }).catch(e => {
       reject(false)
@@ -136,12 +173,18 @@ export const auth = (username, password) => {
 }
 
 export const sendRequest = async ({ auth = "", url, params = "", method = "GET", body = "", res = "data" }) => {
+  if (auth) {
+    const token = jwt(localStorage.getItem('token'))
+    if (token['exp'] < moment.now()) {
+      sendRefreshToken()
+    }
+  }
   let options = {
     url: `${APILink}${url}?${params}`,
     method,
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: auth,
+      Authorization: `Bearer  ${localStorage.getItem('token')}`
     }
   }
   if (method !== 'GET') {

@@ -31,6 +31,7 @@ const Index = () => {
         to: null
     });
     const [tagList, setTagList] = useState([])
+    const [selectedTag, setSelectedTag] = useState(1)
     const [name, setName] = useState("testt")
     const [companyId, setcompanyId] = useState("1")
     const [tagId, setTagId] = useState("1")
@@ -45,14 +46,13 @@ const Index = () => {
     ]);
 
     useEffect(() => {
-        var m = moment('1399/05/05').unix()
-        console.log(m)
-        if (typeof adId !== undefined) {
 
+        if (typeof adId !== undefined) {
+            // for edit video
         }
         getTags().then(tags => setTagList(tags))
         console.log(tagList)
-    });
+    }, []);
 
     const renderCustomInput = ({ ref }) => (
         <input
@@ -81,7 +81,7 @@ const Index = () => {
             file: file,
             name: name,
             company_id: companyId,
-            tag_ids: tagId,
+            tag_ids: selectedTag,
             enabled: true,
             schedule: [from, to]
         })
@@ -90,13 +90,13 @@ const Index = () => {
     const onChange = (e) => {
         switch (e.target.name) {
             case 'name':
-                setName(e.target.name)
+                setName(e.target.value)
                 break;
             case 'tag':
-                setTagId(e.target.name)
+                setSelectedTag(e.target.value)
                 break;
             case 'company':
-                setcompanyId(e.target.name)
+                setcompanyId(e.target.value)
                 break;
             case 'file':
                 setFile(e.target.files[0])
@@ -104,13 +104,36 @@ const Index = () => {
             default:
                 break;
         }
+    }
 
+    const submitTest = () => {
+        console.log(file)
+        var myHeaders = new Headers();
+
+        var formdata = new FormData();
+        formdata.append("video", file);
+        formdata.append("name", "test_video");
+        formdata.append("company_id", "1");
+        formdata.append("tag_ids", "[1,2]");
+        formdata.append("enabled", "true");
+        formdata.append("schedule", "[1592808138, 1592809138]");
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch("http://avir.sytes.net:7000/ad", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
     return (
         <Container style={{ direction: 'rtl' }}>
             <Navigation />
-
 
             <div className="pannel-wrapper">
                 <Row style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -134,8 +157,8 @@ const Index = () => {
                         </div>
                         <div className="form-group">
                             <label>دسنه</label>
-                            <select type="text" className="form-control" name="tag" placeholder="نام" >
-                                {listItems.map(m => <option value={m.id}> {m.name} </option>)}
+                            <select type="text" className="form-control" name="tag" placeholder="نام"  onChange={onChange}>
+                                {tagList.map(m => <option value={m.id}> {m.name} </option>)}
                             </select>
                         </div>
                     </Col>
@@ -157,7 +180,7 @@ const Index = () => {
                 <Row style={{ textAlign: 'center', marginTop: '65px' }}>
                     <Col>
                         {/* <Link className="btn btn-primary btn-block" to="/panel">ذخیره</Link> */}
-                        <Button lassName="btn btn-primary btn-block" onClick={sumbitForm}>ذخیره</Button>
+                        <Button lassName="btn btn-primary btn-block" onClick={submitTest}>ذخیره</Button>
                     </Col>
                 </Row>
             </div>

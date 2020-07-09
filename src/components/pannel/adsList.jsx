@@ -17,7 +17,13 @@ import { getAllAd, getVideoImage } from '../../services/services'
 
 
 export default function AdsList() {
+    // var objArray = []
     const [list, setList] = useState([]);
+    const [objArray, setobjArray] = useState([]);
+    const [imageObj, setImageObj] = useState({
+        id: '',
+        image: ''
+    });
     const [loading, setLoading] = useState(true);
     const history = useHistory();
 
@@ -28,21 +34,57 @@ export default function AdsList() {
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-        getAllAd().then(json => setList(json))
-        console.log(list)
-        
+
+        getAllAd().then(json => {
+            setList(json)
+            setobjArray(json)
+            console.log(json)
+            json.map((item, index) => {
+                imageHandler(item.id)
+            })
+        })
     }, []);
 
     const addNew = (e) => {
-        console.log(e)
         history.push(`panel/editad/${e.target.name}`)
-        console.log('clicked')
+    }
+
+    const imageHandler = (id) => {
+        console.log(objArray)
+        console.log('filan')
+        getVideoImage(id, function(dataUrl) {
+            objArray.map(item => {
+                console.log(objArray)
+                if (item.id === id) {
+                    // TODO: change tsi
+                    item.image = dataUrl
+                }
+                console.log(loading)
+                setLoading(false)
+
+            })
+            // console.log('RESULT:', dataUrl)
+            // setImageObj({
+            //     ...imageObj,
+            //     id,
+            //     image: dataUrl
+            // })
+          })
+        //   .then(data => {
+        //     console.log('in then', imageObj, id, data, loading)
+        //     setImageObj({
+        //         ...imageObj,  
+        //         id,
+        //         image: data 
+        //    })
+        // })
     }
 
     const enabled = { border: '3px solid green', borderRadius: '5px' }
-    const disabled = {border: '3px solid red', borderRadius: '5px'}
+    const disabled = { border: '3px solid red', borderRadius: '5px' }
     return (
         <div style={{ marginTop: '5%' }}>
+            {loading ? 'wait' : 'go'}
 
             <Row>
                 <Col md={4}>
@@ -51,15 +93,13 @@ export default function AdsList() {
                     </Card>
                 </Col>
 
-                {list.map((item, index) => {
-                    if (!item.image) {
-                        item.image = place
-                    }
-                    item.image = getVideoImage(item.id)
+                {objArray.map((item, index) => {
+                    console.log(item)
+                    item.image = place
                     return (
                         <Col key={item.id} md={4}>
                             <Card onClick={addNew} name={item.id} style={item.enabled ? enabled : disabled}>
-                                <img src={item.image} alt={item.description} />
+                                <img src={item.image} alt={item.description} name={item.id}/>
                             </Card>
                         </Col>
                     )

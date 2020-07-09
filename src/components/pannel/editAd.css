@@ -1,0 +1,14 @@
+
+.right-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.DatePicker{
+    width: 100%;
+    direction: rtl;
+}
+input[type='file']{
+    display: none;
+}

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Container, Row, Col, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Navigation from './navbar';
 import './newAd.css';
@@ -8,6 +8,11 @@ import DatePicker from "react-modern-calendar-datepicker";
 import * as moment from 'jalali-moment';
 
 const Reports = () => {
+
+    useEffect(() => {
+        console.log(moment().format('MM'))
+    }, []);
+
     const [selectedDayRange, setSelectedDayRange] = useState({
         from: null,
         to: null
@@ -33,7 +38,6 @@ const Reports = () => {
       )
 
       const changeDate = (strDate) =>{
-          debugger;
           const dateObje = new Date(strDate);
           return moment(dateObje, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD');
       }
@@ -99,7 +103,7 @@ const Reports = () => {
                                     { type: 'date', id: 'Start' },
                                     { type: 'date', id: 'End' },
                                     ],
-                                    [ '1', 'گلرنگ', 'این انقد ', new Date(1789, 3, 29), new Date(1797, 2, 3) ],
+                                    [ '1', 'گلرنگ', 'این انقد ', new Date(selectedDayRange.from), new Date(selectedDayRange.to) ],
                                   
                                 ]}
                                 rootProps={{ 'data-testid': '2' }}

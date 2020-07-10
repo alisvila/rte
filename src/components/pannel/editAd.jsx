@@ -1,7 +1,7 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Navigation from './navbar';
-
+import Checkbox from 'react-checkbox-component'
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker from "react-modern-calendar-datepicker";
 import './editAd.css';
@@ -17,7 +17,8 @@ import {
     useParams
 } from "react-router-dom";
 import Card from '../share/card';
-import { getTags, upload, getAdById, getVideoImage } from '../../services/services';
+import Clip from '../share/clip';
+import { getTags, editAd, getAdById, getVideoImage } from '../../services/services';
 import moment from 'jalali-moment'
 moment.locale('fa')
 
@@ -31,21 +32,15 @@ const EditAd = () => {
         to: null
     });
     const [tagList, setTagList] = useState([])
-    const [selectedTag, setSelectedTag] = useState(1)
+    const [selectedTag, setSelectedTag] = useState([])
     const [name, setName] = useState("testt")
     const [companyId, setcompanyId] = useState("1")
     const [tagId, setTagId] = useState("1")
     const [description, setDescription] = useState("1")
     const [file, setFile] = useState()
     const [imageObj, setImageObg] = useState()
-    const [listItems, setListItem] = useState([
-        {
-            name: 'آیتم 1', id: 1
-        },
-        {
-            name: 'آیتم 2', id: 2
-        }
-    ]);
+    const [tagSelected, setTagSelected] = useState([]);
+    const [enabled, setEnabled] = useState(true);
 
     useEffect(() => {
         getAdById(adId).then(data => {
@@ -55,6 +50,7 @@ const EditAd = () => {
                 to: {day: moment(data.schedule[1]).day(), month: moment(data.schedule[1]).month(), year: moment(data.schedule[1]).year()}
             })
             setDescription(data.description)
+            setTagSelected(data.tags)
             console.log(moment(data.schedule[0]).month())
         })
 
@@ -93,23 +89,27 @@ const EditAd = () => {
         var from = moment(selectedDayRange.from.year + "/" + selectedDayRange.from.month + '/' + selectedDayRange.from.day).unix()
         var to = moment(selectedDayRange.to.year + "/" + selectedDayRange.to.month + '/' + selectedDayRange.to.day).unix()
         console.log(selectedDayRange.from)
-        upload({
-            file: file,
+        editAd({
+            adId: adId,
             name: name,
             company_id: companyId,
             tag_ids: selectedTag,
             enabled: true,
-            schedule: [from, to]
+            schedule: "[1592808138, 1592809138]"
         })
     }
 
     const onChange = (e) => {
+        let value = e.target.value
         switch (e.target.name) {
             case 'name':
                 setName(e.target.value)
                 break;
             case 'tag':
-                setSelectedTag(e.target.value)
+                const found = tagSelected.find(element => element === value);
+                if (!found) {
+                    setTagSelected(oldArray => [...oldArray, value])
+                }
                 break;
             case 'company':
                 setcompanyId(e.target.value)
@@ -122,31 +122,41 @@ const EditAd = () => {
         }
     }
 
+    const onChangeCheck = (e) => {
+        setEnabled(old => !old)
+    }
+
     const submitTest = () => {
         console.log(selectedDayRange)
-
+        var from = moment(selectedDayRange.from.year + "/" + selectedDayRange.from.month + '/' + selectedDayRange.from.day).unix()
+        var to = moment(selectedDayRange.to.year + "/" + selectedDayRange.to.month + '/' + selectedDayRange.to.day).unix()
 
         var myHeaders = new Headers();
+        const auth = `Bearer  ${localStorage.getItem('token')}`
+        myHeaders.append('Authorization', auth)
 
         var formdata = new FormData();
-        formdata.append("video", file);
-        formdata.append("name", "test_video");
-        formdata.append("company_id", "1");
-        formdata.append("tag_ids", "[1,2]");
-        formdata.append("enabled", "true");
-        formdata.append("schedule", "[1592808138, 1592809138]");
+        formdata.append("name", name);
+        formdata.append("company_id", companyId);
+        formdata.append("tag_ids", JSON.stringify(tagSelected));
+        formdata.append("enabled", enabled);
+        formdata.append('schedule', JSON.stringify([from, to]));
 
         var requestOptions = {
-            method: 'POST',
+            method: 'PUT',
             headers: myHeaders,
             body: formdata,
             redirect: 'follow'
         };
 
-        // fetch("http://avir.sytes.net:7000/ad", requestOptions)
-        //     .then(response => response.text())
-        //     .then(result => console.log(result))
-        //     .catch(error => console.log('error', error));
+        fetch("http://avir.sytes.net:7000/ad/" + adId, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+
+    const removeTag = (id, index) => {
+        setTagSelected(tagSelected.splice(index, 1));
     }
 
     return (
@@ -162,6 +172,14 @@ const EditAd = () => {
                                 <input value={name} onChange={onChange} name="name" type="text" className="form-control" placeholder="نام" />
                             </div>
                         </div>
+                        <div className="form-row">
+                            <div class="form-group col-md-12">
+                                <label>فعال</label>
+                                <Checkbox size="small" isChecked={enabled} onChange={onChangeCheck}
+                                    color="#9c80ad" />
+                            </div>
+                        </div>
+
                         <div className="form-group" style={{ direction: 'ltr', textAlign: 'center' }}>
                             <label>بازه ردیابی</label>
                             <DatePicker
@@ -174,10 +192,27 @@ const EditAd = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>دسنه</label>
+                            <label>دسته</label>
                             <select type="text" className="form-control" name="tag" placeholder="نام"  onChange={onChange}>
+                                <option disabled selected> -- انتخاب دسته -- </option>
                                 {tagList.map(m => <option value={m.id}> {m.name} </option>)}
                             </select>
+                            <div className="">
+                            {tagSelected.map((item, index) => {
+                                let name
+                                tagList.map(obj => {
+                                    console.log(obj.id, item)
+                                    if (obj.id === parseInt(item)) {
+                                        name = obj.name
+                                    }
+                                })
+                                return (
+                                    <Clip click={removeTag} id={item.id} index={index}>
+                                        {name}
+                                    </Clip>
+                                )
+                            })}
+                            </div>
                         </div>
                     </Col>
                     <Col style={{ textAlign: 'center' }} md={6}>

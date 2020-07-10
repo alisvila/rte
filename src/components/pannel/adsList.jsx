@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react'
 import Card from '../share/card'
-import plc1 from './plc1.jpg'
+import { withRouter } from "react-router-dom";
 import place from '../place.png'
 import add from './add.png'
 import { Row, Col, Container, Form, FormControl, Button } from 'react-bootstrap';
@@ -14,97 +14,101 @@ import {
     useLocation
 } from "react-router-dom";
 import { getAllAd, getVideoImage } from '../../services/services'
+import Search from './search'
 
 
-export default function AdsList() {
-    // var objArray = []
-    const [list, setList] = useState([]);
-    const [objArray, setobjArray] = useState([]);
-    const [imageObj, setImageObj] = useState({
-        id: '',
-        image: ''
-    });
-    const [loading, setLoading] = useState(true);
-    const history = useHistory();
+class AdsList extends Component {
+    constructor(props) {
+        super(props)
 
-    const routeChange = () => {
-        let path = `panel/newad`;
-        history.push(path);
+        this.state = {
+            list: [],
+            objArray: [],
+            imageObj: {
+                id: '',
+                image: ''
+            },
+            loading: true
+        }
+        this.imageHandler = this.imageHandler.bind(this)
     }
-
-    // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-
+    componentDidMount() {
         getAllAd().then(json => {
-            setList(json)
-            setobjArray(json)
-            console.log(json)
+            this.setState({
+                list: json,
+                objArray: json
+            })
             json.map((item, index) => {
-                imageHandler(item.id)
+                this.imageHandler(item.id)
             })
         })
-    }, []);
-
-    const addNew = (e) => {
-        history.push(`panel/editad/${e.target.name}`)
     }
 
-    const imageHandler = (id) => {
-        console.log(objArray)
-        console.log('filan')
-        getVideoImage(id, function(dataUrl) {
-            objArray.map(item => {
-                console.log(objArray)
+    routeChange = () => {
+        let path = `panel/newad`;
+        this.props.history.push(path);
+    }
+
+    imageHandler(id) {
+        let obj = this.state.list
+        getVideoImage(id, (dataUrl) => {
+            obj.map((item, index) => {
+                console.log('map')
                 if (item.id === id) {
-                    // TODO: change tsi
-                    item.image = dataUrl
+                    if (dataUrl === 'fail') {
+                        obj[index].image = place
+                    }
+                    else {
+                        obj[index].image = dataUrl
+                    }
+                    console.log('get image suc', obj)
                 }
-                console.log(loading)
-                setLoading(false)
-
+                this.setState({
+                    list: obj
+                })
             })
-            // console.log('RESULT:', dataUrl)
-            // setImageObj({
-            //     ...imageObj,
-            //     id,
-            //     image: dataUrl
-            // })
-          })
-        //   .then(data => {
-        //     console.log('in then', imageObj, id, data, loading)
-        //     setImageObj({
-        //         ...imageObj,  
-        //         id,
-        //         image: data 
-        //    })
-        // })
+        })
+
     }
 
-    const enabled = { border: '3px solid green', borderRadius: '5px' }
-    const disabled = { border: '3px solid red', borderRadius: '5px' }
-    return (
-        <div style={{ marginTop: '5%' }}>
-            {loading ? 'wait' : 'go'}
+    addNew = (e) => {
+        this.props.history.push(`panel/editad/${e.target.name}`)
+    }
 
-            <Row>
-                <Col md={4}>
-                    <Card onClick={routeChange}>
-                        <img src={add} alt="plx1" />
-                    </Card>
-                </Col>
+    searched = (list) => {
+        this.setState({list})
+    }
 
-                {objArray.map((item, index) => {
-                    console.log(item)
-                    item.image = place
-                    return (
-                        <Col key={item.id} md={4}>
-                            <Card onClick={addNew} name={item.id} style={item.enabled ? enabled : disabled}>
-                                <img src={item.image} alt={item.description} name={item.id}/>
+    render() {
+        console.log('render')
+        const enabled = { border: '3px solid green', borderRadius: '5px' }
+        const disabled = { border: '3px solid red', borderRadius: '5px' }
+        return (
+            <>
+                <Search list={this.state.objArray} searched={this.searched}/>
+                <div style={{ marginTop: '5%' }}>
+
+                    <Row>
+                        <Col md={3}>
+                            <Card onClick={this.routeChange}>
+                                <img src={add} alt="plx1" />
                             </Card>
                         </Col>
-                    )
-                })}
-            </Row>
-        </div>
-    )
+
+                        {this.state.list.map((item, index) => {
+                            return (
+                                <Col key={item.id} md={3}>
+                                    <Card onClick={this.addNew} name={item.id} style={item.enabled ? enabled : disabled}>
+                                        <img src={item.image} alt={item.description} name={item.id} style={{width: '100%'}} />
+                                    </Card>
+                                </Col>
+                            )
+                        })}
+                    </Row>
+                </div>
+            </>
+        )
+    }
 }
+
+export default withRouter(AdsList)

@@ -79,6 +79,11 @@ export const getVideoImage = (id, callback) => {
   };
   xhr.open('GET', `${APILink}ad/${id}/image`);
   xhr.setRequestHeader('Authorization', `Bearer  ${localStorage.getItem('token')}`)
+  xhr.onreadystatechange = function () { // Call a function when the state changes.
+    if (this.readyState !== XMLHttpRequest.DONE || this.status !== 200) {
+      callback('fail');
+    }
+  }
   xhr.responseType = 'blob';
   xhr.send();
 }
@@ -143,10 +148,32 @@ export const upload = ({file, name, company_id, tag_ids, enabled, schedule}) => 
 
 
   return new Promise((resolve, reject) => {
-
     sendRequest({
       url: 'ad',
       method: 'Post',
+      body: bodyFormData
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
+export const editAd = ({adId, name, company_id, tag_ids, enabled, schedule}) => {
+
+  var bodyFormData = new FormData();
+  bodyFormData.append('name', name);
+  bodyFormData.append('company_id', company_id);
+  bodyFormData.append('tag_ids', tag_ids);
+  bodyFormData.append('enabled', enabled);
+  bodyFormData.append('schedule', schedule);
+
+
+  return new Promise((resolve, reject) => {
+    sendRequest({
+      url: `ad/${adId}`,
+      method: 'PUT',
       body: bodyFormData
     }).then(json => {
       resolve(json)

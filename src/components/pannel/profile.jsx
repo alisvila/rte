@@ -67,7 +67,7 @@ export default function Profile() {
                         <input value={newPassword} name="newpassword" type="password" className="form-control" id="inputPassword4" placeholder="رمز" onChange={onChange}/>
                     </div>
                     <div className="form-group col-md-6">
-                        <button class="btn btn-primary" onClick={changeClick}>submit</button>
+                        <button class="btn btn-primary" onClick={changeClick}>ثبت</button>
                     </div>
                 </Row>
             </div>

@@ -2,7 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import { Container, Row, Col, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Navigation from './navbar';
 import './newAd.css';
-import plc1 from './plc1.jpg';
 import { Chart } from "react-google-charts";
 import DatePicker from "react-modern-calendar-datepicker";
 import * as moment from 'jalali-moment';

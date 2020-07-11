@@ -217,10 +217,10 @@ const EditAd = () => {
                     </Col>
                     <Col style={{ textAlign: 'center' }} md={6}>
 
-                        <div class="form-group col-md-12" onClick={triggerInputFile}>
+                        <div class="form-group col-md-12">
                             <Card>
                                 <img src={imageObj} alt="plx1" />
-                                <input type="file" name="file" ref={input => fileInput = input} onChange={onChange}/>
+                                {/* <input type="file" name="file" ref={input => fileInput = input} onChange={onChange}/> */}
                             </Card>                            
                         </div>
 

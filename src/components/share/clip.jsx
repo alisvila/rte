@@ -10,5 +10,6 @@ export default function Clip(props) {
             <span>{props.children}</span>
             <a onClick={() => props.click(id, index)}><FontAwesomeIcon icon={faTimes} /></a>
         </span>
+        
     )
 }

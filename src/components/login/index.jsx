@@ -32,7 +32,7 @@ export default function Login() {
 
     const login = async (e) => {
         e.preventDefault() 
-        console.log('going for auth')
+
         auth(username, password).then(data => {
             console.log(data)
             history.push('panel')

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import {
     BrowserRouter as Router,
@@ -12,9 +12,13 @@ import {
 } from "react-router-dom";
 import arvin from '../../logo.png'
 import { logout } from '../../../services/auth'
+import JwtDecode from 'jwt-decode';
+
 
 
 export default function Navigation() {
+    const [accountName, setAccountName] = useState("")
+    
     const history = useHistory();
 
     const exit = (e) => {
@@ -22,6 +26,12 @@ export default function Navigation() {
         logout()
         history.push('/')
     }
+
+    useEffect(() => {
+        let token = localStorage.getItem('access_token')
+
+        console.log(JwtDecode(token))
+    }, [])
     return (
         <Navbar className="pannel-nav" expand="lg" style={{marginTop: '5%'}}>
             <Navbar.Brand href="#home">

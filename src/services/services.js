@@ -220,7 +220,7 @@ export const auth = (username, password) => {
       body: bodyFormData
     }).then(token => {
       console.log(jwt(token['access_token']))
-      localStorage.setItem('token', token['access_token'])
+      localStorage.setItem('access_token', token['access_token'])
       localStorage.setItem('refresh_token', token['refresh_token'])
       resolve(true)
     }).catch(e => {
@@ -229,8 +229,8 @@ export const auth = (username, password) => {
   })
 }
 
-export const sendRefreshToken = (failedReq, data) => {
-  console.log('in refresh token')
+export const sendRefreshToken = () => {
+  return new Promise((resolve, reject) => {
   var bodyFormData = new FormData();
     sendRequest({
       url: 'refresh',
@@ -239,20 +239,24 @@ export const sendRefreshToken = (failedReq, data) => {
       body: bodyFormData
     }).then(token => {
       localStorage.setItem('token', token['access_token'])
-      console.log(data)
-      failedReq(data)
+      resolve(token)
     }).catch(e => {
+      reject(e)
     })
+  })
 }
 
 export const sendRequest = async ({ auth = "", url, params = "", method = "GET", body = "", res = "data" }) => {
-  console.log(auth === "", localStorage.getItem('token').length > 0)
-  if (auth === "" && localStorage.getItem('token').length > 0) {
-    auth = `Bearer  ${localStorage.getItem('token')}`
-    const token = jwt(localStorage.getItem('token'))
-    console.log(token['exp'] < Date.now().toString().substr(0, 10))
-    if (token['exp'] < Date.now().toString().substr(0, 10)) {
-      sendRefreshToken(sendRequest, {auth, url, params, method, body, res})
+  const token = localStorage.getItem('access_token')
+
+  if (auth === "") {
+
+    if (token && JwtDecode(token).exp > Date.now() / 1000) {
+      auth = `Bearer  ${token}`
+    }
+    else {
+      console.log('in else ')
+      sendRefreshToken()
     }
   }
   let options = {

@@ -9,7 +9,7 @@ import {
     useLocation
   } from "react-router-dom";
 
-  import { isAuthenticated } from './services/auth';
+  import { isAuthenticated, is_authenticated } from './services/auth';
 
   // import fakeAuth from './services/auth'
   // localStorage.setItem('token', 'filan')
@@ -28,12 +28,12 @@ import {
 
 
   export default function PrivateRoute({ children, ...rest }) {
-    console.log(isAuthenticated(), 'in privvate route filan bisar')
+    console.log(is_authenticated(), 'in privvate route filan bisar')
     return (
       <Route
         {...rest}
         render={({ location }) =>
-          isAuthenticated() ? (
+          is_authenticated() ? (
             children
           ) : (
             <Redirect

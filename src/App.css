@@ -31,6 +31,11 @@ hr {
   border-top: 2px solid #f90;
 }
 
+.error-field {
+  border: 3px solid #fd808b;
+  border-radius: 5px;
+}
+
 .btn-small-submit {
   width: 130px;
 }
